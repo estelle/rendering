@@ -1,0 +1,145 @@
+/* Content */
+img {
+  border: none;
+}
+header {
+  font-weight: normal;
+  font-size: 1.8rem;
+  margin: 0 0.5em;
+}
+.intro h1 {
+  font-size: 2.5rem;
+  text-decoration: underline 1px dotted;
+  text-underline-offset: 0.2em;
+}
+h2 {
+  font-size: 1.8rem;
+}
+section, footer {
+  font-family: helvetica neue, helvetica, sans serif;
+  text-shadow: rgba(0, 0, 0, 0.2) 0 2px 5px;
+  margin: 20px 30px 0;
+  display: block;
+  overflow: hidden;
+}
+footer {
+  font-size: 1rem;
+  margin: 20px 0 0 30px;
+}
+a {
+  color: inherit;
+  display: inline-block;
+  text-decoration: underline dotted 1px;
+  text-underline-offset: 6px;
+  line-height: 110%;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+pre {
+  font-size: 1rem;
+  padding: 10px 20px;
+  b, strong {
+    font-weight: strong;
+  }
+}
+/* slowly show content */
+.temphidden {
+  visibility: hidden;
+}
+/* a11y */
+.skiplink {
+  opacity: 0;
+  &:focus {
+    opacity: 1;
+  }
+}
+
+p.alt {position: absolute; top: 110vh;}
+
+
+.mostflex,
+.twoimages {
+  display: flex; 
+  gap: 1em; 
+  justify-content: center; 
+  align-items: center;
+  list-style-type: none;
+  img {
+    height: 24vh;
+    max-height: 200px;
+  }
+  img[src*=both] {
+    height: 48vh;
+    max-height: 400px;
+  }
+}
+.twoimages { 
+  height: calc(100vh - 6rem);
+  min-height: 80px;
+}
+
+.thought p {
+  padding: 25px;
+  margin: -50px 0 50px;
+  &,
+  &::before,
+  &::after  {
+  border-radius: 50%;
+  border: 5px solid var(--text);
+  background-color: var(--center);
+  position:relative;
+ }
+ &::before,
+ &::after {
+  content: '';
+  position:absolute;
+  left: 20%; bottom: -30px;
+  height: 40px; width: 40px;
+ }
+ &::after {
+  left: 12%; bottom: -50px;
+  height: 20px; width: 20px;
+ }
+}
+.transport {
+  list-style-type: none;
+  text-align: center;
+  font-family: monospace;
+  span {
+    font-size: 0.6em;
+  }
+  li {
+    line-height: 0.8;
+  }
+}
+p.notes, ul.notes {
+  opacity: 0.2;
+  font-size: 24px;
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  width: 40vw;
+}
+ul.notes li {
+  font-size: inherit;
+}
+
+/* js table */
+.js { 
+    border: none;
+    margin-bottom: 1px;
+  td {padding: 10px 30px;}
+  td[class] {outline: 1px solid white;}
+  .pause {background: #0009;}
+  .render {background: orange;}
+  .execute {background-color: #0003;}
+  .download {background-color: white; color: orange;}
+}
+
+dt {
+  float: left;
+  margin-right: 0.2em;
+  color: var(--center);
+}

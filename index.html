@@ -1,0 +1,1383 @@
+<!DOCTYPE HTML>
+<html lang="en-us">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Browsers : populating the page</title>
+<!--
+Made by: Estelle Weyl
+Copyright:  CC-SA-NC-BY - Creative Commons Attribution-NonCommercial-ShareAlike
+Based on: http://estelle.github.com/browsers
+-->
+<meta name="viewport" content="width=device-width,user-scalable=yes">
+<meta name="description" content="To understand web performance, developers must first understand how the browser works.">
+<base target="_play">
+<style> /* a11y override */
+  * {
+    background-repeat: no-repeat;
+  }
+  body {
+    color: white;
+    background-color: black;
+  }
+  .ttfb {
+    position: relative;
+  }
+  .ttfb::after {
+    position: absolute;
+    content: '(TTFB)';
+    color: orange;
+    bottom: -5px;
+    font-size: small;
+  }
+.later {opacity: 0.5;}
+</style>
+<link rel="stylesheet" href="css/index.css" class="removeForAT">
+</head>
+
+<body>
+<div id="presentation">
+   <div class="slides">
+
+<div class="slide intro">
+<header>
+  <h1 style="text-decoration: none;">Browser : populating the page</h1>
+</header>
+<section class="content">
+  <button id="killCSS" class="skiplink">Remove stylesheet to make accessible</button>
+  <p><a href="https://estelle.github.io/browsers" target="_self">estelle.github.io/browsers</a></p>
+</section>
+</div>
+
+
+
+<div class="slide intro">
+<header>
+  <h1>Web Performance</h1>
+</header>
+<section class="content">
+  <p>Web Performance *IS* User Experience</p>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>User Experience</h1>
+</header>
+<section class="content">
+    <ul class="bulleted">
+    <li>UX</li>
+    <li>Performance</li>
+    <li>Internationalization</li>
+    <li>Accessibility</li>
+    <li>Security</li>
+    <li>Confidentiality</li>
+  </ul>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>Web performance</h1>
+</header>
+<section class="content">
+    <ul class="bulleted">
+    <li class="temphidden">Time to interactive</li>
+    <li class="temphidden">Server</li>
+    <li class="temphidden">PerformanceTiming API</li>
+    <li class="temphidden">First Contentful Paint (FCP)</li>
+    <li class="temphidden">Jank</li>
+    <li class="temphidden">Perceived Performance</li>
+  </ul>
+</section>
+</div>
+
+
+<!-- browser -->
+<div class="slide intro">
+<header>
+  <h1>The Browser</h1>
+</header>
+</div>
+
+
+
+<!-- browser -->
+<div class="slide" style="background-image: url(img/browser.png);">
+<header>
+  <h1>The Browser</h1>
+</header>
+
+<p class="alt">image: Browser</p>
+</div>
+
+
+<!-- browser + server -->
+<div class="slide" style="background-image: url(img/browser.png)">
+<header>
+  <h1>The Browser : Enemy #1</h1>
+</header>
+<section>
+  <div class="twoimages">
+    <img src="img/timer.svg" alt="timer">
+    <img src="img/server.svg" alt="server">
+  </div>
+  <p class="notes">The time it takes to get all the resources from all the servers</p>
+</section>
+</div>
+
+
+
+<!-- browser + thread -->
+<div class="slide" style="background-image: url(img/browser.png), url(img/thread.png); background-size: auto 50%, auto 25%;">
+<header>
+  <h1>The Browser : Friend AND Foe</h1>
+</header>
+<p class="alt">image: fil</p>
+<p class="notes"></p>
+</div>
+
+
+
+
+<div class="slide" style="background-image: url(img/celltower.svg);">
+<header>
+  <h1>Mobile Networks</h1>
+</header>
+<section class="content">
+  <p class="notes">The longest delay is the time it takes to make the round trip time between the phone and the cell tower. Air is the greatest cause of latency</p>
+</section>
+</div> 
+
+
+
+
+
+
+<div class="slide" style="background-image: url(img/weak.png);">
+<header>
+  <h1>The Power of Mobile</h1>
+</header>
+<section class="content">
+  <p class="notes">Mobile browsers are super powerful.
+    Mobile devices are not </p>
+</section>
+</div> 
+
+
+
+<!-- browser -->
+<div class="slide" style="background-image: url(img/browser.png);">
+<header>
+  <h1>The Browser</h1>
+</header>
+
+<p class="alt">image: server</p>
+</div>
+
+
+
+<!-- browser with search -->
+<div class="slide" style="background-image: url(img/duck1.png);">
+<header>
+  <h1>The Browser</h1>
+</header>
+
+<p class="alt">image: browser with duck-duck-go loaded</p>
+</div>
+
+<!-- browser + server -->
+<div class="slide" style="background-image: url(img/search.png);">
+<header>
+  <h1>The Browser</h1>
+</header>
+
+<p class="alt">image: web page with duck-duck-go search results</p>
+</div>
+
+<!-- browser + server -->
+<div class="slide" style="background-image: url(img/blankbrowser.png);">
+<header>
+  <h1>The Browser</h1>
+</header>
+
+<p class="alt">image: browser with a white screen</p>
+</div>
+
+<div class="slide">
+  <pre>
+&lt;!doctype HTML&gt;
+&lt;html lang="en-us"&gt;
+ &lt;head&gt;
+  &lt;meta charset="UTF-8"/&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;My site&lt;/title&gt;
+  &lt;link rel="stylesheet" src="styles.css"/&gt;
+  &lt;script src="myscript.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;My Page&lt;/h1&gt;
+  &lt;p&gt;A paragraph with an &lt;a href="//example.com"&gt;link&lt;/a&gt;&lt;/p&gt;
+  &lt;figure&gt;
+    &lt;img src="myImage.jpg" alt="description of the image"/&gt;
+    &lt;caption&gt;My photo&lt;/caption&gt;
+  &lt;/figure&gt;
+  &lt;script src="anotherscript.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>It's not that simple...</p>
+</div>
+
+
+
+
+
+
+
+<div class="slide">
+<header>
+  <h1>Web Performance</h1>
+</header>
+<section class="content">
+  <p>Populating the page</p>
+  <ol class="bulleted">
+    <li class="temphidden">Navigation</li>
+    <li class="temphidden">Reponse</li>
+    <li class="temphidden">Parsing</li>
+    <li class="temphidden">Rendering</li>
+  </ol>
+  <p class="temphidden">User Interaction</p>
+</section>
+</div>
+
+<div class="slide intro">
+<header>
+  <h1>Navigation</h1>
+</header>
+</div>
+
+<!-- browser with search results -->
+<div class="slide" style="background-image: url(img/search.png);">
+<header>
+  <h1>Navigation</h1>
+</header>
+
+<p class="alt">image: search results from duck-duck-go</p>
+</div>
+
+<div class="slide" style="background-image: url(img/blankbrowser.png);">
+<header>
+  <h1>Navigation</h1>
+</header>
+
+<p class="alt">image: browser with no content (a white screen)</p>
+</div>
+
+
+<!-- browser + server -->
+<div class="slide">
+<header>
+  <h1>Navigation</h1>
+</header>
+<section>
+  <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer"> 
+    <div>←←←</div>
+    <img src="img/webpage.svg" alt="HTML content"> 
+    <div>←←←</div>
+    <img src="img/server.svg" alt="server">
+  </div>
+  <p style="position: relative; top: -2em">It's not that simple...</p>
+</section>
+</div>
+
+
+<div class="slide intro">
+<header>
+  <h1>DNS</h1>
+</header>
+<section clas="content">
+  <p>DNS = Domain Name System</p>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1> DNS Lookup</h1>
+</header>
+<section class="content">
+  <ul class="mostflex thought">
+    <li>
+      <p>www.example.com</p>
+      <img src="img/estelle.svg" alt="human thinking">
+    </li>
+    <li>
+      <p>93.184.216.34</p>
+      <img src="img/laptop.svg" alt="computer thinking">
+    </li>
+  </ul>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>DNS Lookup </h1>
+</header>
+<section class="content">
+  <small>www.example.com == 93.184.216.34</small>
+  <ol>
+    <li>Browser cache</li>
+    <li>Local (OS) cache</li>
+    <li>Router cache</li>
+    <li>Resolve server (Usually your Internet Service Provider).</li>
+    <li>Root server (.com, .fr)</li>
+    <li>Top level domain server</li>
+    <li>Authoritative name servers (ns3.example.com)</li>
+  </ol>
+  <p class="notes">Steps</p>
+</section>
+</div>
+
+
+<div class="slide">
+<header>
+  <h1>DNS Lookup  </h1>
+</header>
+<section class="content">
+    <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer">
+    <ul class="transport">
+      <li> →→→ <span>www.example.com</span> →→→<br/>
+        ←←← <span>93.184.216.34</span> ←←←</li>
+    </ul> 
+    <img src="img/dns.svg" alt="server">
+  </div>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>DNS Lookup  </h1>
+</header>
+<section class="content">
+    <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer"> 
+    <ul class="transport">
+      <li> →→→ <span>URL</span> →→→<br/>
+        ←←← <span>IP</span> ←←←</li>
+      
+    </ul>
+    <img src="img/dns.svg" alt="server">
+  </div>
+</section>
+</div>
+
+
+<div class="slide">
+<header>
+  <h1>Next?</h1>
+</header>
+<section class="content">
+    <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer"> 
+    <ul class="transport">
+        →→→ <span>?</span> →→→
+      </li>
+    </ul>
+    <img src="img/server.svg" alt="server">
+  </div>
+  </section>
+</div>
+
+
+
+
+<div class="slide intro">
+<header>
+  <h1>TCP</h1>
+</header>
+<section class="content">
+  <p>TCP three-way handshake</p>
+  <p>TLS Negotiation</p>
+  <p class="notes">Transmission Control Protocol<br/>Transport Layer Security (TLS) protocol</p>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>TCP Handshake</h1>
+</header>
+<section class="content">
+  <p>Establish a connection</p>
+    <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer"> 
+    <ul class="transport">
+      <li> 
+        →→→ <span>SYN</span> →→→<br/>
+        ←←← <span>SYN-ACK</span> ←←←<br/>
+        →→→ <span>ACK</span> →→→
+      </li>
+    </ul>
+    <img src="img/server.svg" alt="server">
+  </div>
+  <p class="notes">The host, usually the browser, sends a TCP SYNchronize packet to the server. The server receives the SYN and sends back a SYNchronize ACKnowledgment. The host receives the SYN-ACK from the server and sends an ACKnowledgment. The server receives ACK and the TCP socket connection is established. 
+</section>
+</div>
+
+
+<div class="slide">
+<header>
+  <h1>TLS Negotiation</h1>
+</header>
+<section class="content">
+    <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer"> 
+    <ul class="transport">
+      <li> →→→ <span>URL</span> →→→<br/>
+        ←←← <span>IP</span> ←←←</li>
+        <li>&nbsp;</li>
+      <li> →→→ <span>SYN</span> →→→<br/>←←← <span>SYN-ACK</span> ←←←<br/> →→→ <span>ACK</span> →→→</li>
+    </ul>
+    <img src="img/bothservers.svg" alt="server">
+  </div>
+</section>
+</div>
+
+<div class="slide intro">
+<header>
+  <h1> Transport Layer Security (TLS) protocol</h1>
+</header>
+<section class="content">
+  <p>Determines the encryption for communication </p>
+</section>
+</div>
+
+
+<div class="slide">
+<header>
+  <h1>TLS Negotiation</h1>
+</header>
+<section class="content">
+    <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer"> 
+    <ul class="transport">
+      <li> 
+        →→→ <span>ClientHello</span> →→→<br/>
+        ←←← <span>ServerHello &amp; Certificate</span> ←←←<br/> →→→ <span>ClientKey</span> →→→<br/>
+        ←←← <span>Finished</span> ←←←<br/>
+        →→→ <span>Finished</span> →→→
+      </li>
+    </ul>
+    <img src="img/server.svg" alt="server">
+  </div>
+</section>
+</div>
+
+
+
+<div class="slide">
+<section class="content">
+    <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer"> 
+    <ul class="transport">
+      <li> 
+        →→→ <span>URL</span> →→→<br/>
+        ←←← <span>IP</span> ←←←
+      </li>
+      <li>&nbsp;</li>
+      <li> 
+        →→→ <span>SYN</span> →→→<br/>
+        ←←← <span>SYN-ACK</span> ←←←<br/>
+        →→→ <span>ACK</span> →→→
+      </li>
+      <li>&nbsp;</li>
+      <li> 
+        →→→ <span>ClientHello</span> →→→<br/>
+        ←←← <span>ServerHello &amp; Certificate</span> ←←←<br/> →→→ <span>ClientKey</span> →→→<br/>
+        ←←← <span>Finished</span> ←←←<br/>
+        →→→ <span>Finished</span> →→→
+      </li>
+    </ul>
+    <img src="img/bothservers.svg" alt="server">
+  </div>
+</section>
+</div>
+
+
+<div class="slide">
+<section class="content">
+    <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer"> 
+    <ul class="transport">
+      <li> 
+        →→→ <span>URL</span> →→→<br/>
+        ←←← <span>IP</span> ←←←
+      </li>
+      <li>&nbsp;</li>
+      <li> 
+        →→→ <span>SYN</span> →→→<br/>
+        ←←← <span>SYN-ACK</span> ←←←<br/>
+        →→→ <span>ACK</span> →→→
+      </li>
+      <li>&nbsp;</li>
+      <li> 
+        →→→ <span>ClientHello</span> →→→<br/>
+        ←←← <span>ServerHello &amp; Certificate</span> ←←←<br/> →→→ <span>ClientKey</span> →→→<br/>
+        ←←← <span>Finished</span> ←←←<br/>
+        →→→ <span>Finished</span> →→→
+      </li>
+      <li style="color: var(--center)"> 
+        →→→ <span>HTTP-GET-REQUEST</span> →→→
+      </li>
+    </ul>
+    <img src="img/bothservers.svg" alt="server">
+  </div>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>The Request</h1>
+</header>
+<section class="content">
+    <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer"> 
+    <ul class="transport">
+      <li> 
+        →→→ <span>HTTP-GET-REQUEST</span> →→→
+      </li>
+
+    </ul>
+    <img src="img/server.svg" alt="server">
+  </div>
+</section>
+</div>
+
+
+<div class="slide intro">
+<header>
+  <h1>The Response</h1>
+</header>
+</div>
+
+<!--
+<div class="slide">
+<header>
+  <h1>Le chemin...</h1>
+</header>
+<section class="content">
+  <p>Navigation</p>
+  <ol>
+    <li>DNS</li>
+    <li>TCP</li>
+    <li>TLS</li>
+    <li>Request</li>
+  </ol>
+  <p>La Reponse</p>
+  <ol>
+    <li>...</li>
+  </ol> 
+</section>
+</div> -->
+
+
+<div class="slide">
+<header>
+  <h1>The Response</h1>
+</header>
+<section class="content">
+  <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer"> 
+    <div>←←←</div>
+    <img src="img/webpage.svg" alt="HTML content"> 
+    <div>←←←</div>
+    <img src="img/server.svg" alt="server">
+  </div>
+  <p style="position: relative; top: -2em">It's not that simple...</p>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>The Response</h1>
+</header>
+<section class="content">
+    <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer"> 
+    <div>←←←</div>
+    <img src="img/webpagehalf.svg" alt="HTML web page cut in half" style="position: relative; top: -62px"> 
+    <div>←←←</div>
+    <img src="img/server.svg" alt="server">
+  </div>
+</section>
+</div>
+
+
+<div class="slide">
+<header>
+  <h1>TCP Slow Start</h1>
+</header>
+<section class="content">
+
+  <p>Algorithm to detect available bandwidth </p>
+  <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer">
+    <ul class="transport"> 
+      <li>  ⇔ <span>DNS</span> ⇔ <li>
+      <li>  ⇔ <span>SYN-SYN-ACK</span> ⇔ <li>
+      <li>  ⇔ <span>TLS</span> ⇔ <li>
+      <li> 
+        →→→ <span>HTTP-GET-REQUEST</span> →→→
+      </li>
+      <li> 
+        ←←← <span class="ttfb">14kb</span> ←←←<br/>
+        →→→ <span>ACK</span> →→→<br/>
+        ←←← <span>28kb</span> ←←←<br/>
+        →→→ <span>ACK</span> →→→<br/>
+        ←←← <span>56kb</span> ←←←<br/>
+        →→→ <span>ACK</span> →→→<br/>
+        ←←← <span>112kb</span> ←←←<br/></li>
+      <li> . . .
+      </li>
+    </ul>
+    <img src="img/server.svg" alt="server">
+  </div>
+</section>
+</div>
+
+
+
+
+
+
+<div class="slide">
+<header>
+  <h1>Congestion control</h1>
+</header>
+<section class="content">
+  <p>Confirm delivery by returning ACK, acknowledgments of receipt </p>
+  <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer">
+    <ul class="transport"> 
+      <li>  ⇔ <span>DNS</span> ⇔ <li>
+      <li>  ⇔ <span>SYN-SYN-ACK</span> ⇔ <li>
+      <li>  ⇔ <span>TLS</span> ⇔ <li>
+      <li> 
+        →→→ <span>HTTP-GET-REQUEST</span> →→→
+      </li>
+      <li> 
+        ←←← <span class="ttfb">14kb</span> ←←←<br/>
+        →→→ <span style="color: var(--center)">ACK</span> →→→<br/>
+        ←←← <span>28kb</span> ←←←<br/>
+        →→→ <span style="color: var(--center)">ACK</span> →→→<br/>
+        ←←← <span>56kb</span> ←←←<br/>
+        →→→ <span style="color: var(--center)">ACK</span> →→→<br/>
+        . . .
+      </li>
+    </ul>
+    <img src="img/server.svg" alt="server">
+  </div>
+</section>
+</div>
+
+
+
+
+<div class="slide">
+<header>
+  <h1>Congestion control</h1>
+</header>
+<section class="content">
+  <p>Confirm delivery by returning ACK, acknowledgments of receipt </p>
+  <div class="twoimages">
+    <img src="img/laptop.svg" alt="lap top computer">
+    <ul class="transport"> 
+      <li> 
+        →→→ <span>HTTP-GET-REQUEST</span> →→→
+      </li>
+      <li> 
+        ←←← <span class="ttfb">14kb</span> ←←←<br/>
+        →→→ <span style="color: var(--center)">ACK</span> →→→<br/>
+        ←←← <span>28kb</span> ←←←<br/>
+        →→→ <span style="color: var(--center)">ACK</span> →→→<br/>
+        ←←← <span>56kb</span> ←←←<br/>
+        →→→ <span style="color: var(--center)">ACK</span> →→→<br/>
+        
+        ←←← <span>112kb</span> ←←←<br/>
+        . . .
+      </li>
+      <li>
+        ←←← <span>56kb</span> ←←←<br/>
+        →→→ <span style="color: var(--center)">ACK</span> →→→<br/> . . .
+      </li>
+    </ul>
+    <img src="img/server.svg" alt="server">
+  </div>
+</section>
+</div>
+
+
+
+
+
+
+<div class="slide">
+<header>
+  <h1>Reponse<span class="ttfb"></span></h1>
+</header>
+<section class="content">  <pre>
+&lt;!doctype HTML&gt;
+&lt;html lang="en-us"&gt;
+ &lt;head&gt;
+  &lt;meta charset="UTF-8"/&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;My site&lt;/title&gt;
+  &lt;link rel="stylesheet" src="styles.css"/&gt;
+  &lt;script src="myscript.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;My Page&lt;/h1&gt;
+  &lt;p&gt;A paragraph with an &lt;a href="//example.com"&gt;link&lt;/a&gt;&lt;/p&gt;
+  &lt;figure&gt;
+    &lt;img src="myImage.jpg" alt="image description"/&gt;
+    &lt;caption&gt;My photo&lt;/caption&gt;
+  &lt;/figure&gt;
+  &lt;script src="anotherscript.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+  <img src="img/nodes.svg" class="temphidden" style="position: absolute; right: 0; top: 0">
+</section>
+</div>
+
+<div class="slide intro">
+<header>
+  <h1>Parsing</h1>
+</header>
+</div>
+
+
+<div class="slide">
+<header>
+  <h1>Parsing</h1>
+</header>
+<section class="content">
+  <ul>
+    <li>DOM</li>
+    <li>CSSOM</li>
+    <li>AOM</li>
+    <li>AST / Compilation JS</li>
+  </ul>
+<p>It's not that simple</p>
+  <ul class="notes">
+    <li>Starts immediately (14kb)</li>
+    <li>Main thread</li>
+    <li>Preload Scanner</li>
+    <li>Critical Rendering Path = 5 steps</li>
+  </ul>
+</section>
+</div>
+
+
+
+<div class="slide">
+<header>
+  <h1>DOM</h1>
+</header>
+<section class="content">
+  <p>Document Object Model, <br/>
+    describes the content</p>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>DOM</h1>
+</header>
+<section class="content">
+  <img src="img/blockeddom.svg" style="transform: translateY(-40px);">
+</section>
+</div>
+
+
+<div class="slide">
+<header>
+  <h1>Preload scanner </h1>
+</header>
+<section class="content">
+  <p>Requests high priority resources</p>
+  <pre>&lt;link rel="stylesheet" src="styles.css"/>
+&lt;script src="myscript.js" <strong>async</strong>>&lt;/script>
+&lt;img src="myImage.jpg" alt="image description"/>
+&lt;script src="unautrescript.js" <strong>defer</strong>>&lt;/script></pre>
+<img src="img/thread.png" alt="not the main thread " style="float:right; opacity: 0.3; max-height: 33vh; background-image: linear-gradient(to bottom right, transparent 48%, white 48%52%, transparent 52%), linear-gradient(to bottom left, transparent 48%, white 48%52%, transparent 52%)">
+</section>
+</div>
+
+
+<div class="slide">
+<header>
+  <h1>JavaScript</h1>
+</header>
+<section class="content">
+  <!--<img src="img/async.png" alt="difference between async and defer">-->
+  <table class="js">
+    <tr>
+      <td>&lt;script></td>
+      <td class="render">RENDER &nbsp; &nbsp; &nbsp; &nbsp;</td>     
+      <td colspan="2" class="pause">PAUSE</td>
+      <td colspan="2" class="render">RENDER</td>
+    </tr>
+    <tr>
+      <td></td>     
+      <td></td>
+      <td class="download">DOWNLOAD</td> 
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>      
+      <td></td>
+      <td class="execute">EXECUTE</td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr><td colspan="6"></td></tr>
+    <tr>
+      <td>&lt;script defer></td>
+      <td colspan="4" class="render">RENDER</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>     
+      <td class="download">DOWNLOAD</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>     
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="execute">EXECUTE</td>
+    </tr>
+    <tr><td colspan="6"></td></tr>
+    <tr>
+      <td>&lt;script async></td>
+      <td colspan="2" class="render">RENDER</td>
+      <td class="pause">PAUSE</td>
+      <td colspan="2" class="render">RENDER</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>      
+      <td class="download">DOWNLOAD</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td></td>      
+      <td></td>
+      <td class="execute">EXECUTE</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>DOM</h1>
+</header>
+<section class="content">
+  <img src="img/blockeddom.svg" style="transform: translateY(-40px);">
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>DOM</h1>
+</header>
+<section class="content">
+  <img src="img/dom.svg" style="transform: translateY(-40px);" alt="DOM tree">
+</section>
+</div>
+
+
+
+
+<div class="slide">
+  <header><h1>DOM</h1></header>
+  <section class="content">
+    <pre>
+&lt;!doctype HTML&gt;
+&lt;html lang="en-us"&gt;
+ &lt;head&gt;
+  &lt;meta charset="UTF-8"/&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;My site&lt;/title&gt;
+  &lt;link rel="stylesheet" src="styles.css"/&gt;
+  &lt;script src="myscript.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;My Page<span style="color: var(--center);">&lt;/h1&gt;</span>
+  &lt;p&gt;A paragraph with &lt;a href="//example.com"&gt;link&lt;/a&gt;&lt;/p&gt;
+  &lt;figure&gt;
+    &lt;img src="myImage.jpg" alt="image description"/&gt;
+    &lt;caption&gt;My photo&lt;/caption&gt;
+  &lt;/figure&gt;
+  &lt;script src="anotherscript.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+  </section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>CSSOM</h1>
+</header>
+<section class="content">
+  <p>Describes the style rules</p>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>CSSOM</h1>
+</header>
+<section class="content">
+
+ 
+<pre>:root {
+  font-size: 16px;
+}
+body {
+  color: #333333;
+}
+h1 {
+  font-size: 2rem;
+}
+p a {
+  color: blue;
+}
+figure img {
+  border: none;
+  width: 100%;
+}</pre>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>CSSOM</h1>
+</header>
+<section class="content">
+
+  <img src="img/cssom.svg" style="transform: translateY(-40px); float: right" alt="CSSOM">
+
+<pre>:root {
+  font-size: 16px;
+}
+body {
+  color: #333333;
+}
+h1 {
+  font-size: 2rem;
+}
+p a {
+  color: blue;
+}
+figure img {
+  border: none;
+  width: 100%;
+}</pre>
+</section>
+</div>
+
+
+<div class="slide">
+<header>
+  <h1>CSSOM</h1>
+</header>
+<section class="content">
+
+  <img src="img/cssom2.svg" style="transform: translateY(-40px); float: right" alt="CSSOM">
+
+<pre>:root {
+  font-size: 16px;
+}
+body {
+  color: #333333;
+}
+h1 {
+  font-size: 2rem;
+}
+p a {
+  color: blue;
+}
+img {
+  border: none;
+  width: 100%;
+}</pre>
+</section>
+</div>
+
+
+
+
+<div class="slide" style="background-image: url(img/aom.png); background-size: cover; background-position: top left;">
+<header>
+  <h1>AOM</h1>
+</header>
+<section class="content">
+<p class="alt">image: screen shot of accessiblity tab showing accessiblity names</p>
+<p class="notes" style="color: black;">Until the construction of the AOM, the content is not accessible to screen readers. </p>
+</section>
+</div>
+
+
+<div class="slide" style="background-image: url(img/astexplorer.png); background-size: contain; background-position: top right; background-color: white">
+<header>
+  <h1 style="margin-top: 30vh; color: orange">JavaScript Compilation </h1>
+</header>
+<section class="content">
+  <ol style="color: orange">
+    <li style = "color: orange"> interpreted </li>
+         <li style = "color: orange"> compiled <sup>*</sup> </li>
+         <li style = "color: orange"> parsed </li>
+         <li style = "color: orange"> executed <sup>**</sup> </li> 
+  </ol>
+  <p  style="color: orange; font-size: small;"><sup>*</sup>Analyzed in abstract syntax trees, generating optimize and / or binary code executed on the main thread .</p>
+
+  <p  style="color: orange; font-size: small;"><sup>**</sup>Will generate an error if JavaScript is executed on a DOM node that has not yet been encountered </p>
+  <p class="alt">Screen shot of a simple javascript event handler in ASTExplorer.net</p>
+</section>
+</div>
+
+
+
+
+
+<div class="slide intro">
+<header>
+  <h1>Rendering</h1>
+</header>
+</div>
+
+<div class="slide">
+<header>
+  <h1>Rendering</h1>
+</header>
+<section class="content">
+  <ol>
+    <li>Style</li>
+    <li>Layout</li>
+    <li>Paint</li>
+    <li>Compositing</li>
+  </ol>
+</section>
+</div>
+
+
+<div class="slide">
+<header>
+  <h1>Main Thread </h1>
+</header>
+<section class="content">
+  <img src="img/thread.png" alt="Main thread" style="float: left; max-height: 40vh; margin: 1em 1.5em 0 0">
+  <ol style="float: left">
+    <li>HTML Analysis  / DOM Creation</li>
+    <li>CSS Analysis / CSSOM Creation</li>
+    <li>Conversion of JS to JS AST </li>
+    <li>JavaScript Execution </li>
+    <li>
+      DOM and CSSOM analysis / Rendering </li>
+  </ol>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>Main Thread</h1>
+</header>
+<section class="content">
+  <img src="img/thread.png" alt="Main thread" style="float: left; max-height: 40vh; margin: 1em 1.5em 0 0">
+  <ol style="float: left">
+    <li> HTML analysis / DOM creation </li>
+    <li> CSS analysis / CSSOM creation </li>
+    <li> Conversion to JS to JS AST </li>
+    <li> Running javascript </li>
+    <li> DOM and CSSOM analysis / Rendering </li>
+    <li class = "later"> Layout </li>
+    <li class = "later"> Paint </li>
+    <li class = "later"> Interaction </li>
+    <li class = "later"> Animation? </li> 
+  </ol>
+</section>
+</div>
+
+
+<div class="slide">
+<header>
+  <h1>Rendering</h1>
+</header>
+<section class="content">
+<p>DOM and CSSOM: combined to form the rendering tree. Contains only the nodes necessary to render the page. </p>
+  <img src="img/rendertree.svg" alt="render process" style="margin-top: 1em">
+
+</section>
+</div>
+
+
+<div class="slide">
+<header>
+  <h1>Style</h1>
+</header>
+<section class="content">
+  <p>Creation of the "Render Tree" - Computed Styles</p>
+  <ul>
+    <li>UA stylesheets</li>
+    <li>User style sheets</li>
+    <li>Cascade</li>
+    <li><code>visibility: hidden</code>: yes</li>
+    <li><code>display: none</code>: no</li>
+  </ul>
+    <p>Determines the CSS rules for each visible (and hidden) node. </p>
+</section>
+</div>
+
+
+
+<div class="slide">
+<header>
+  <h1>Layout</h1>
+</header>
+<section class="content">
+  <p> Calculate the layout of each visible element </p>
+     <p> Determine the dimensions of all nodes in the render tree </p> 
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>Layout</h1>
+</header>
+<section class="content">
+  <img src="img/mobileshot1.png" alt="screen shot of mobile screen" style="float: right">
+  <pre>img {
+    width: 100%;
+    
+  }</pre>
+  <pre>&lt;img src="myImage.jpg" alt="image description "/&gt;</pre>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>Layout <span style="color: var(--center)">(New)</span></h1>
+</header>
+<section class="content">
+  <img src="img/mobileshot2.png" alt="screen shot of mobile screen" style="float: right">
+  <pre>img {
+    width: 100%;
+    height: auto;
+  }</pre>
+  <pre>&lt;img src="myImage.jpg" alt="image description "
+    width="100" height="100"/&gt;</pre>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>Paint</h1>
+</header>
+<section class="content">
+  <ul>
+    <li> Render pixels on screen </li>
+    <li> Number of pixels = h * w * dppx </li>
+    <li> Find the [r, g, b, a] for each pixel. </li>
+    <li> Frame buffer = array of array [r, g, b, a] </li>
+    <li> first paint / first meaningful paint </li> 
+</ul>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>Composite: Paint layers on the GPU</h1>
+</header>
+<section class="content">
+  <ul>
+    <li> animate opacity or transformations </li>
+     <li> 3D transforms </li>
+     <li> higher <code> z-index </code> </li>
+     <li><code>&lt;video> </code> and <code>&lt;canvas></code> </li>
+     <li> CSS Filters </li>
+     <li> <code> will-change </code> property </li>
+     <li> <code> isolation: isolate </code> </li> 
+  </ul>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>Fast on the GPU</h1>
+</header>
+<section class="content js">
+  <p> Merge the layers to calculate the <br/>
+    RGBA value of each pixel </p> 
+  <div class="render">[255, 165, 0, 1]</div>
+  <div class="execute">[0, 0, 0, 0.2]</div>
+  <div class="composite">[204, 132, 0, 1]</div>
+  <style>
+    .content.js div {
+      height: 200px;
+      width: 200px;
+      position: absolute;
+      top: 100px;
+      padding: 10px;
+      right: 100px;
+      font-size: 0.5rem;
+      font-family: monospace;
+      box-sizing: border-box;
+    }
+    .content.js .execute {
+      top: 150px;
+      right: 150px;
+      padding-top: 160px;
+    }
+    .content.js .composite {
+      top: 200px;
+      right: 110px;
+    }
+  </style>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>Reflow</h1>
+</header>
+<section class="content">
+  <p>When a change is made:
+  <ol>
+    <li>re-style</li>
+    <li>re-layout</li>
+    <li>re-paint</li>
+    <li>re-composite</li>
+  </ol>
+  <p> Recalculate almost everything! </p> 
+</section>
+</div>
+
+
+<div class="slide">
+<header>
+  <h1>Reflow</h1>
+</header>
+<section class="content">
+  <img src="img/mobileshot1.png" alt="screen shot of mobile screen" style="float: right">
+  <pre>img {
+    width: 100%;
+    
+  }</pre>
+  <pre>&lt;img src="myImage.jpg" alt="image description "/&gt;</pre>
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>Re-Layout <span style="color: var(--center)">not necessary</span></h1>
+</header>
+<section class="content">
+  <img src="img/mobileshot2.png" alt="screen shot of mobile screen" style="float: right">
+  <pre>img {
+    width: 100%;
+    height: auto;
+  }</pre>
+  <pre>&lt;img src="myImage.jpg" alt="image description "
+    width="100" height="100"/&gt;</pre>
+  <ol class="temphidden">
+    <li style="opacity: 0.2">re-style</li>
+    <li style="opacity: 0.2">re-layout</li>
+    <li>re-paint</li>
+    <li>re-composite?</li>
+  </ol>
+</section>
+</div>
+
+
+
+<div class="slide intro">
+<header>
+  <h1>User Interaction</h1>
+</header>
+<section class="content">
+</section>
+</div>
+
+<div class="slide">
+<header>
+  <h1>Le but</h1>
+</header>
+<section class = "content">
+  <p> No blocking on the main thread. Should respond to the user in less than 50ms and animate in less than 16.67ms (60fps) </p>
+  <ul>
+    <li> <img src = "img/thread.png" alt = "" style = "float: right; opacity: 0.2; max-height: 33vh"> jank </li>
+    <li> scroll </li>
+    <li> user interaction </li>
+    <li> animation </li> 
+</section>
+</div>
+
+<div class="slide intro">
+<header>
+  <h1>Thanks</h1>
+</header>
+<section class="content">
+  https://estelle.github.com/browsers
+</section>
+</div>
+
+<div class="slide intro">
+<section class="content" style="display: flex; flex-flow: column; justify-content: space-between; height: calc(100vh - 50px);">
+<div>
+    <h1>Estelle Weyl</h1>
+    <p><a href="http://www.standardista.com">standardista.com</a><br><a href="https://www.PerfMattersConf.com">PerfMattersConf.com</a><br><a href="http://www.twitter.com/estellevw">@estellevw</a><br><a href="http://www.twitter.com/standardista">@standardista</a></p>
+ </div>
+<div style="margin: 0 -70px;">
+    <div class="floatright books">
+      <img src="https://akamaicovers.oreilly.com/images/0636920021711/cat.gif" alt="Mobile HTML5" />
+      <img src="img/fem.png" alt="Front End Masters">
+      <img src="https://akamaicovers.oreilly.com/images/9780987467485/cat.gif" alt="HTML5 and CSS3 for the Real World">
+      <img src="https://akamaicovers.oreilly.com/images/0636920041658/cat.gif" alt="Animations and Transitions with CSS"/>
+      <img src="https://akamaicovers.oreilly.com/images/0636920025955/cat.gif" alt="Web Performance Daybook"/>
+      <img src="https://covers.oreillystatic.com/images/0636920012726/cat.gif" alt="CSS: The Definitive Guide">
+      <img src="https://covers.oreillystatic.com/images/0636920066682/cat.gif" alt="Flexbox in CSS"/>
+    </div>
+  </div>
+</div>
+<header>
+    <nav>
+        <ul>
+            <li><button class="button cancel" id="back">Back</button></li>
+            <li><button class="button done" id="next">Next</button></li>
+        </ul>
+    </nav>
+</header>
+<span style="color: white; position: absolute; bottom: 10px; right: 10px; font-family: fantasy;">@estellevw</span>
+
+   </div>
+</div>
+<script src="slides.js" class="removeForAT"></script>
+</body>
+</html>

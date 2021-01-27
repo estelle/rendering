@@ -1,0 +1,454 @@
+:root {
+  --bg: hsl(310, 80%, 30%);
+  --center: orange;
+  --bglight: lighten(hsl(310, 80%, 30%), 20%);
+  --text: #ffffff;
+}
+
+nav button {
+  z-index: 1000;
+  position: absolute;
+  top: 0;
+  font-size: 30%;
+  color: var(--text);
+  background-color: var(--colorpop);
+  border: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+nav ul {
+  list-style-type: none;
+}
+
+#next {
+  right: 0;
+  padding: 5px 0 20px 25px;
+  background: radial-gradient(ellipse at 100% 20%, var(--center) 48%, var(--bg) 48%, 52%, var(--text) 52%, 54%, transparent 54%);
+}
+#next:hover, #next:focus {
+  background: radial-gradient(ellipse at 100% 20%, var(--center) 48%, transparent 48%);
+}
+
+#back {
+  left: 0;
+  padding: 5px 25px 20px 0px;
+  background: radial-gradient(ellipse at 0% 20%, var(--center) 48%, var(--bg) 48%, 52%, var(--text) 52%, 54%, transparent 54%);
+}
+#back:hover, #back:focus {
+  background: radial-gradient(ellipse at 0% 20%, var(--center) 48%, transparent 48%);
+}
+
+.slides {
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  position: absolute;
+}
+
+.slide {
+  position: absolute;
+  display: none;
+  overflow: hidden;
+  padding: 20px;
+  color: white;
+  box-sizing: border-box;
+}
+
+.past, .current, .future {
+  display: block;
+  visibility: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+.current {
+  opacity: 1;
+  visibility: visible;
+}
+
+.slide.intro {
+  text-align: center;
+  font-size: 2rem;
+}
+.slide textarea.mynotes {
+  -webkit-appearance: none;
+  border: 1px #aaa solid;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 1.2rem;
+  font-style: italic;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
+  padding: 5px;
+  box-sizing: border-box;
+}
+.slide ol, .slide ul {
+  margin-left: 1em;
+}
+.slide li {
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+}
+.slide p {
+  font-size: 1.5rem;
+  margin: 1rem 0 0 0;
+}
+
+body .slide {
+  background-size: 100%;
+}
+
+.slide.bigbg {
+  background-size: cover;
+}
+.slide.bigbg h1 {
+  margin: 0 -2vw;
+  padding: 0 2vw;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.slide.bigbg .alt {
+  color: rgba(0, 0, 0, 0.1);
+  font-size: 1px;
+}
+
+:root {
+  font-size: 220%;
+  letter-spacing: 0.01em;
+}
+
+body,
+#presentation {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+  background: radial-gradient(at bottom right, var(--center), 20%, var(--bg));
+}
+
+.slide.slide {
+  background: none center center/auto 50% no-repeat;
+}
+
+.slide.intro {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.slide.intro hgroup {
+  margin-top: 200px;
+}
+
+.slide.large .content {
+  font-size: 1.75rem;
+}
+
+.content {
+  font-size: 1.5rem;
+}
+.content ul {
+  padding-left: 1em;
+}
+
+.content input, button {
+  font-size: 2rem;
+}
+
+.slide textarea.mynotes {
+  -webkit-appearance: none;
+  border: 1px #aaa solid;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 1.2rem;
+  font-style: italic;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
+  padding: 5px;
+  box-sizing: border-box;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, cursive, serif;
+}
+
+td, th {
+  border: 1px solid black;
+}
+
+.invalid {
+  background-color: red;
+}
+
+header {
+  left: 30px;
+  top: 25px;
+  font-size: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 0px;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+h1:first-child {
+  margin-top: 0;
+}
+
+section, footer {
+  text-shadow: rgba(0, 0, 0, 0.2) 0 2px 5px;
+  margin: 20px 30px 0;
+  display: block;
+  overflow: hidden;
+}
+
+footer {
+  font-size: 1rem;
+  margin: 20px 0 0 30px;
+}
+
+a {
+  color: inherit;
+  display: inline-block;
+  text-decoration: none;
+  line-height: 110%;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  font-size: 1.5rem;
+  margin: 1rem 0 0 0;
+}
+
+blockquote {
+  font-size: 2rem;
+}
+
+/* Content */
+img {
+  border: none;
+}
+
+header {
+  font-weight: normal;
+  font-size: 1.8rem;
+  margin: 0 0.5em;
+}
+
+.intro h1 {
+  font-size: 2.5rem;
+  text-decoration: underline 1px dotted;
+  text-underline-offset: 0.2em;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+section, footer {
+  font-family: helvetica neue, helvetica, sans serif;
+  text-shadow: rgba(0, 0, 0, 0.2) 0 2px 5px;
+  margin: 20px 30px 0;
+  display: block;
+  overflow: hidden;
+}
+
+footer {
+  font-size: 1rem;
+  margin: 20px 0 0 30px;
+}
+
+a {
+  color: inherit;
+  display: inline-block;
+  text-decoration: underline dotted 1px;
+  text-underline-offset: 6px;
+  line-height: 110%;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+pre {
+  font-size: 1rem;
+  padding: 10px 20px;
+}
+pre b, pre strong {
+  font-weight: strong;
+}
+
+/* slowly show content */
+.temphidden {
+  visibility: hidden;
+}
+
+/* a11y */
+.skiplink {
+  opacity: 0;
+}
+.skiplink:focus {
+  opacity: 1;
+}
+
+p.alt {
+  position: absolute;
+  top: 110vh;
+}
+
+.mostflex,
+.twoimages {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+}
+.mostflex img,
+.twoimages img {
+  height: 24vh;
+  max-height: 200px;
+}
+.mostflex img[src*=both],
+.twoimages img[src*=both] {
+  height: 48vh;
+  max-height: 400px;
+}
+
+.twoimages {
+  height: calc(100vh - 6rem);
+  min-height: 80px;
+}
+
+.thought p {
+  padding: 25px;
+  margin: -50px 0 50px;
+}
+.thought p, .thought p::before, .thought p::after {
+  border-radius: 50%;
+  border: 5px solid var(--text);
+  background-color: var(--center);
+  position: relative;
+}
+.thought p::before, .thought p::after {
+  content: "";
+  position: absolute;
+  left: 20%;
+  bottom: -30px;
+  height: 40px;
+  width: 40px;
+}
+.thought p::after {
+  left: 12%;
+  bottom: -50px;
+  height: 20px;
+  width: 20px;
+}
+
+.transport {
+  list-style-type: none;
+  text-align: center;
+  font-family: monospace;
+}
+.transport span {
+  font-size: 0.6em;
+}
+.transport li {
+  line-height: 0.8;
+}
+
+p.notes, ul.notes {
+  opacity: 0.2;
+  font-size: 24px;
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  width: 40vw;
+}
+
+ul.notes li {
+  font-size: inherit;
+}
+
+/* js table */
+.js {
+  border: none;
+  margin-bottom: 1px;
+}
+.js td {
+  padding: 10px 30px;
+}
+.js td[class] {
+  outline: 1px solid white;
+}
+.js .pause {
+  background: #0009;
+}
+.js .render {
+  background: orange;
+}
+.js .execute {
+  background-color: #0003;
+}
+.js .download {
+  background-color: white;
+  color: orange;
+}
+
+dt {
+  float: left;
+  margin-right: 0.2em;
+  color: var(--center);
+}
+
+table {
+  margin: auto;
+  border: 1px solid #DEDEDE;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.rowed tr:nth-of-type(even),
+.rowed th,
+.th th {
+  background-color: #DEDEDE;
+}
+
+section td, section th {
+  border: none;
+  font-size: 30px;
+  padding: 4px;
+}
+
+@media print {
+  .slide {
+    page-break-inside: avoid;
+    page-break-after: always;
+    visibility: visible !important;
+    font-size: 20pt;
+    font-family: Arial, sans-serif;
+  }
+
+  @page {
+    size: landscape;
+  }
+  body {
+    font-size: 12pt;
+    background: white;
+  }
+
+  header h1 {
+    border-top: 2pt solid gray;
+    border-bottom: 1px dotted silver;
+  }
+
+  #presentation-counter, #info, #topinfo, .counter {
+    display: none;
+  }
+}
+
+/*# sourceMappingURL=index.css.map */

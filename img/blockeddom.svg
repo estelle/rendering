@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="940" height="740">
+	<title>DOM Tree</title>
+	<style>
+	text {
+		stroke: orange;
+		fill: orange;
+		opacity: 1;
+		font-size: 20px
+	}
+	.heading + text,
+	.subnode + text,
+	.subnode + text + text {
+		stroke: white;
+		fill: white;
+	}
+	[d] {
+		stroke-width: 2px;
+		stroke: orange;
+		fill: white;
+	}
+	.lines [d] {
+		stroke: white;
+	}
+	.heading {
+		fill: orange;
+		stroke: white;
+	}
+	.empty {
+		stroke: white;
+	}
+	.subnode {
+		fill: none;
+		stroke: white;
+	}
+	</style>
+
+	<path d="M205 45h200v50H205v-49z" />
+	<text x="235" y="75">HTML</text>
+	<path d="M425 45h200v50H425v-49z" class="subnode" />
+	<text x="455" y="75">lang="fr-fr"</text>
+<g id="head">
+	<path d="M50 135h200v50H50v-49z" class="heading"/>
+	<text x="75" y="165">HEAD</text>
+	<path d="M105 220h100v50H105v-49z" />
+	<text x="120" y="250">META</text>
+		<path d="M225 220h100v50H225v-49z" class="subnode" />
+		<text x="240" y="250">charset="</text>
+	<path d="M105 288h100v50H105v-49z" />
+	<text x="120" y="318">TITLE</text>
+	<path d="M105 355h100v50H105v-49z" />
+	<text x="120" y="385">LINK</text>
+		<path d="M225 355h100v50H225v-49z"  class="subnode"/>
+		<text x="240" y="375">rel="...</text>
+		<text x="240" y="395">href="...</text>
+		<text x="340" y="385">render &amp; JS blocking</text>
+	<path d="M105 420h100v50H105v-49z" />
+	<text x="120" y="450">SCRIPT</text>
+		<path d="M225 420h100v50H225v-49z"  class="subnode"/>
+		<text x="240" y="450">src="...</text>
+		<text x="340" y="450">BLOCKING!</text>
+	<g class="lines">
+		<path d="M166 135l50-40"/>
+		<path d="M400 70H425"/>
+
+		<path d="M113 244H70"/>
+		<path d="M71 450l-0-264"/>
+		<path d="M113 244H70"/>
+		<path d="M113 314H70"/>
+		<path d="M113 384H70"/>
+		<path d="M113 450H70"/>
+		<path d="M225 244H200"/>
+		<path d="M225 384H200"/>
+		<path d="M225 450H200"/>
+	</g>
+</g>
+
+
+	</svg>
