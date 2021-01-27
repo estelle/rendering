@@ -37,7 +37,7 @@
 	<path d="M205 45h200v50H205v-49z" />
 	<text x="235" y="75">HTML</text>
 	<path d="M425 45h200v50H425v-49z" class="subnode" />
-	<text x="455" y="75">lang="fr-fr"</text>
+	<text x="455" y="75">lang="en-us"</text>
 <g id="head">
 	<path d="M50 135h200v50H50v-49z" class="heading"/>
 	<text x="75" y="165">HEAD</text>
@@ -84,7 +84,7 @@
 	<path d="M385 288h200v50H385v-49z" />
 	<text x="410" y="318">P</text>
 	<path d="M470 355h200v50H470v-49z"  class="subnode" />
-	<text x="495" y="383">Un paragraphe ...</text>
+	<text x="495" y="383">A paragraph ...</text>
 	<path d="M470 420h200v50H470v-49z" />
 	<text x="495" y="450">A</text>
 	<path d="M690 420h200v50H690v-49z"  class="subnode"  />
